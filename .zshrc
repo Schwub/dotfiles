@@ -67,6 +67,11 @@ plugins=(git vi-mode tmux)
 # --- Sources ---
 source $ZSH/oh-my-zsh.sh
 #source ~/.config/tmuxinator/tmuxinator.zsh
+source ~/.zplug/init.zsh
+
+# --- Zplug ---
+zplug "changyuheng/fz", defer:1
+zplug "rupa/z", use:z.sh
 
 # --- Base16 ---
 BASE16_SHELL=$HOME/.config/base16-shell/
@@ -75,6 +80,9 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 
 bindkey -M viins 'jk' vi-cmd-mode
 
+# --- Bare Gitrepo for dotfiles ---
+alias config='/usr/bin/git --git-dir=/home/schwub/.cfg/ --work-tree=/home/schwub'
+#
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -102,7 +110,7 @@ bindkey -M viins 'jk' vi-cmd-mode
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias config='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
 
 # --- FZF ---
 
@@ -121,4 +129,5 @@ vf() {
 }
 
 export FZF_TMUX=1
-alias config='/usr/bin/git --git-dir=/home/schwub/.cfg/ --work-tree='
+
+
