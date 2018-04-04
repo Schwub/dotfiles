@@ -1,4 +1,6 @@
 call plug#begin('~/.local/share/nvim/plugged')
+Plug 'ajh17/Spacegray.vim'
+Plug 'hdima/python-syntax'
 Plug 'chriskempson/base16-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -28,7 +30,6 @@ Plug 'neomake/neomake'
 Plug 'itchyny/calendar.vim'
 Plug 'tell-k/vim-autopep8'
 Plug 'easymotion/vim-easymotion'
-
 call plug#end()
 
 " --- Keys ---
@@ -51,6 +52,10 @@ syntax on
 
 " Set colors to be 256
 set t_Co=256
+"set background=dark
+if (has("termguicolors"))
+	set termguicolors
+endif
 
 " set tabs to have 4 spaces
 set ts=4
@@ -95,7 +100,7 @@ set filetype=plugin-on
 set filetype=ident-on
 "let g:pymode=1
 
-" ---Base 16 ---
+"---Base 16 ---
 if filereadable(expand("~/.vimrc_background"))
 	let base16colorspace=256
 	source ~/.vimrc_background
@@ -158,3 +163,8 @@ let g:go_highlight_methods = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_types = 1
+
+
+" ---netrw---
+let g:netrw_lifestyle=3
+let g:netrw_altv = 1
