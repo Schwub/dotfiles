@@ -1,17 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 
 # Path to your oh-my-zsh installation.
-# --- Exports ---
-export EDITOR=nvim
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-#export PATH=$PATH:$Home/Go_Workspace/bin
 export ZSH=$HOME/.oh-my-zsh
-export PATH=$HOME/Software/Flutter/flutter/bin:$PATH
-export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
-export PATH=$PATH:~/.npm-global/bin
-
-
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -60,61 +50,50 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode tmux)
+plugins=(git vi-mode tmux taskwarrior fasd)
+
+# --- oh-my-zsh ---
+source $ZSH/oh-my-zsh.sh
 
 # User configuration
+####################
 
-# --- Sources ---
-source $ZSH/oh-my-zsh.sh
-#source ~/.config/tmuxinator/tmuxinator.zsh
-source ~/.zplug/init.zsh
+# --- Exports ---
+export EDITOR=nvim
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+export PATH=$HOME/Software/Flutter/flutter/bin:$PATH
+export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+export PATH=$PATH:~/.npm-global/bin
+export PATH=$HOME/Software:$PATH
+export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# --- Keybinds ---
+bindkey -M viins 'jk' vi-cmd-mode
+
+# --- Aliases ---
+#Bare Gitrepo for dotfiles
+alias config='/usr/bin/git --git-dir=/home/schwub/.cfg/ --work-tree=/home/schwub'
+alias zshconfig="nvim ~/.zshrc"
+alias ohmyzsh="nvim ~/.oh-my-zsh"
+alias l="exa"
+alias lock="i3lock --fuzzy"
+
+# --- fasd ---
+eval "$(fasd --init auto)"
 
 # --- Zplug ---
-zplug "changyuheng/fz", defer:1
-zplug "rupa/z", use:z.sh
-zplug 'wfxr/forgit', defer:1
+#source ~/.zplug/init.zsh
+#zplug "changyuheng/fz", defer:1
+#zplug "rupa/z", use:z.sh
+#zplug 'wfxr/forgit', defer:1
 
 # --- Base16 ---
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 
-bindkey -M viins 'jk' vi-cmd-mode
-
-# --- Bare Gitrepo for dotfiles ---
-alias config='/usr/bin/git --git-dir=/home/schwub/.cfg/ --work-tree=/home/schwub'
-#
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-
 # --- FZF ---
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 vf() {
@@ -211,5 +190,16 @@ fbr() {
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
+# fuzzy ag
+vg() {
+  local file
+
+  file="$(ag --nobreak --noheading $@ | fzf -0 -1 | awk -F: '{print $1 " +" $2}')"
+
+  if [[ -n $file ]]
+  then
+     vim $file
+  fi
+}
 
 PATH=$PATH:~/Projects/dva/raspberry_kernel/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin

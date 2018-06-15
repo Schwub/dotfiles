@@ -89,7 +89,8 @@ nnoremap <space> za
 
 "Spellchecking
 au BufNewFile,BufRead,BufEnter *.tex setlocal spell spelllang=de_de
-au BufNewFile,BufRead,BufEnter *.md setlocal spell spelllang=en_gb
+au BufNewFile,BufRead,BufEnter *.rst setlocal spell spelllang=de_de
+au BufNewFile,BufRead,BufEnter *.md setlocal spell spelllang=de_de
 
 "Latexsupport
 
@@ -98,7 +99,7 @@ let g:tex_flavor = 'latex'
 " ---Pymode---
 set filetype=plugin-on
 set filetype=ident-on
-"let g:pymode=1
+let g:pymode=1
 
 "---Base 16 ---
 if filereadable(expand("~/.vimrc_background"))
