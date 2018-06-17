@@ -102,10 +102,10 @@ set filetype=ident-on
 let g:pymode=1
 
 "---Base 16 ---
-if filereadable(expand("~/.vimrc_background"))
-	let base16colorspace=256
-	source ~/.vimrc_background
-endif
+"if filereadable(expand("~/.vimrc_background"))
+"let base16colorspace=256
+"source ~/.vimrc_background
+"endif
 
 " --- Syntastic ---
 let g:syntastic_python_checkers = ['pylint']

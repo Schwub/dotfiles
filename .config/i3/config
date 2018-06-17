@@ -26,10 +26,32 @@ font pango:monospace 8
 # clear in small sizes. However, its unicode glyph coverage is limited, the old
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
-#
+
 # Gaps
 gaps inner 0
 gaps outer 0
+
+# Title Bar
+new_window 1pixel
+
+#Pywal
+# Set colors from Xresources
+# Change 'color7' and 'color2' to whatever colors you want i3 to use 
+# from the generated scheme.
+# NOTE: The '#f0f0f0' in the lines below is the color i3 will use if
+# it fails to get colors from Xresources.
+set_from_resource $fg i3wm.color7 #f0f0f0
+set_from_resource $bg i3wm.color2 #f0f0f0
+
+# class                 border  backgr. text indicator child_border
+client.focused          $bg     $bg     $fg  $bg       $bg
+client.focused_inactive $bg     $bg     $fg  $bg       $bg
+client.unfocused        $bg     $bg     $fg  $bg       $bg
+client.urgent           $bg     $bg     $fg  $bg       $bg
+client.placeholder      $bg     $bg     $fg  $bg       $bg
+
+client.background       $bg
+
 
 #Set Keyboard Layout
 exec --no-startup-id "setxkbmap -layout de"
@@ -38,13 +60,16 @@ exec --no-startup-id "setxkbmap -layout de"
 exec --no-startup-id compton
 
 #Set Wallpaper
-exec_always --no-startup-id feh --bg-fill ~/Bilder/Wallpapers/space2.jpg
+#exec_always --no-startup-id feh --bg-fill ~/Bilder/Wallpapers/space2.jpg
+
+# Start pywal
+exec_always --no-startup-id wal -R
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec st
 
 # kill focused window
 bindsym $mod+Shift+q kill
