@@ -1,0 +1,45 @@
+[colors]
+background = #cc000000
+foreground = #ffffffff
+
+[bar/top]
+width = 100%
+height = 27
+
+spacing = 1
+
+font-0 = NotoSans-Regular:pixelsize=13;0
+font-1 = MaterialIcons:size=10;-2
+font-2 = FontAwesome:size=12;-2
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+modules-left =
+modules-center =
+modules-right = battery
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = " " 
+label = %percentage_used%%
+
+[module/battery]
+type = internal/battery
+
+full-at = 99
+battery = BAT0
+adapter = AC0
+
+poll-interval = 5
+
+format-charging = <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <ramp-capacity> <label-full>
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 

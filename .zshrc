@@ -77,7 +77,6 @@ alias config='/usr/bin/git --git-dir=/home/schwub/.cfg/ --work-tree=/home/schwub
 alias zshconfig="nvim ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias l="exa"
-alias lock="i3lock --fuzzy"
 
 # --- fasd ---
 eval "$(fasd --init auto)"
