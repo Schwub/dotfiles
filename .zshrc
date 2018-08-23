@@ -60,6 +60,7 @@ source $ZSH/oh-my-zsh.sh
 
 # --- Exports ---
 export EDITOR=nvim
+export VISUAL=nvim
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$HOME/Software/Flutter/flutter/bin:$PATH
@@ -76,7 +77,9 @@ bindkey -M viins 'jk' vi-cmd-mode
 alias config='/usr/bin/git --git-dir=/home/schwub/.cfg/ --work-tree=/home/schwub'
 alias zshconfig="nvim ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
-alias l="exa"
+alias ls="exa"
+alias lt="exa -T"
+alias la="exa -a"
 
 # --- fasd ---
 eval "$(fasd --init auto)"
