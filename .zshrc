@@ -68,6 +68,7 @@ export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 export PATH=$PATH:~/.npm-global/bin
 export PATH=$HOME/Software:$PATH
 export SSH_KEY_PATH="~/.ssh/rsa_id"
+export PATH=~/.npm-global/bin:$PATH
 
 # --- Keybinds ---
 bindkey -M viins 'jk' vi-cmd-mode
@@ -205,3 +206,5 @@ vg() {
 }
 
 PATH=$PATH:~/Projects/dva/raspberry_kernel/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin
+
+. /home/schwub/miniconda3/etc/profile.d/conda.sh

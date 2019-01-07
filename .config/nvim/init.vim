@@ -2,42 +2,45 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'Shougo/neosnippet-snippets'
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-fugitive'
-"Plug 'nvie/vim-flake8'
-Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/gnupg.vim'
-"Plug 'python-mode/python-mode'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-"Plug 'roxma/nvim-completion-manager'
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'ludovicchabant/vim-gutentags'
 Plug 'heavenshell/vim-pydocstring'
 Plug 'lervag/vimtex'
-Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
-Plug 'fatih/vim-go'
 Plug 'vimwiki/vimwiki'
+Plug 'sheerun/vim-polyglot'
 "Plug 'neomake/neomake'
 "Plug 'tell-k/vim-autopep8'
 Plug 'joshdick/onedark.vim'
-Plug 'fszymanski/fzf-gitignore', {'do': ':UpdateRemotePlugins'}
-Plug 'Shougo/neosnippet-snippets'
+Plug 'w0rp/ale'
 Plug 'ncm2/ncm2'
-Plug 'SirVer/ultisnips'
 Plug 'roxma/nvim-yarp'
-Plug 'tpope/vim-surround'
+
 autocmd BufEnter * call ncm2#enable_for_buffer()
+
 set completeopt=noinsert,menuone,noselect
+
+Plug 'tpope/vim-surround'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-ultisnips'
+Plug 'ncm2/ncm2-html-subscope'
+Plug 'ncm2/ncm2-match-highlight'
 Plug 'autozimu/LanguageClient-neovim', {
 	\ 'branch': 'next',
 	\ 'do': 'bash install.sh',
 	\ }
 call plug#end()
+
+
+set noshowmode
 
 " --- Keys ---
 :imap jk <Esc>
@@ -56,14 +59,7 @@ set incsearch
 set hlsearch
 " enable syntax highlighting
 syntax on
-" Colorscheme
-"if (has("nvim"))
-"For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-"	let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"endif
-"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+
 if (has("termguicolors"))
 	set termguicolors
 endif
@@ -72,20 +68,13 @@ endif
 colorscheme onedark
 set background=dark
 
-" Set colors to be 256
-"set t_Co=256
-
-" set tabs to have 4 spaces
-set ts=4
+" set tabs as spaces
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 
 " ident when moving to the next line while writing code
 set autoindent
 
-" when using >> or << commands, shift lines by 4 spaces
-set shiftwidth=4
-
-" enable all Python syntax highlighting features
-let g:python_highlight_all=1
 
 " set time out lenght for escape
 set timeoutlen=1000 ttimeoutlen=0
@@ -102,9 +91,8 @@ nnoremap <space> za
 :au FocusLost * :wa
 
 "Spellchecking
-au BufNewFile,BufRead,BufEnter *.tex setlocal spell spelllang=de_de
+"au BufNewFile,BufRead,BufEnter *.tex setlocal spell spelllang=de_de
 au BufNewFile,BufRead,BufEnter *.rst setlocal spell spelllang=de_de
-au BufNewFile,BufRead,BufEnter *.md setlocal spell spelllang=de_de
 
 "Relative Line Numbers
 set number relativenumber
@@ -148,17 +136,6 @@ let g:pymode_lint = 0
 " --- delimitMate ---
 let g:delimitMate_expand_cr=1
 
-" --- NCM ---
-"imap <expr> <CR>  (pumvisible() ?  "\<c-y>\<Plug>(expand_or_nl)" : "\<CR>")
-"imap <expr> <Plug>(expand_or_nl) (cm#completed_is_snippet() ? "\<C-l>":"\<CR>")
-
-"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-"imap <c-g> <Plug>(cm_force_refresh)
-"
-
-" --- LanguageClient-neovim
 set hidden
 let g:LanguageClient_serverCommands = {
 	\ 'python': ['/usr/bin/pyls'],
@@ -166,10 +143,9 @@ let g:LanguageClient_serverCommands = {
 	\ 'sass': ['/usr/bin/css-languageserver', '--stdio'],
 	\ 'less': ['/usr/bin/css-languageserver', '--stdio'],
 	\ 'html': ['/usr/bin/html-languageserver', '--stdio'],
-	\ 'javascript': ['/usr/bin/javascript-typescript-stdio'],
+	\ 'javascript': ['/usr/bin/javascript-typescript-stdio']
  	\}
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-"
 
 " --- NCM2 ---
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -187,8 +163,6 @@ let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 
-" --- PyMode ---
-let g:pymode_rope_completion = 0
 
 " ---Vimtex---
 let g:vimtex_view_method='mupdf'
@@ -205,13 +179,15 @@ let g:go_highlight_structs = 1
 let g:go_highlight_types = 1
 
 
-" ---netrw---
-let g:netrw_lifestyle=3
-let g:netrw_altv = 1
-
-
 " ---vim-polyglot---
 let g:polyglot_disabled = ['latex']
+let g:jsx_ext_required = 1
 
 " ---fzf-vim---
 nnoremap <Space> :GFiles<CR>
+
+" ---ale---
+let g:ale_sign_error = "E"
+let g:ale_sign_warning = "W"
+let g:ale_echo_msg_format = '%linter% says %s'
+
